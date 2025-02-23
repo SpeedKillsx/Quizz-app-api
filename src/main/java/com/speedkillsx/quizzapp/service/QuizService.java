@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,5 +43,27 @@ public class QuizService {
     public Quizz getQuizz( String title){
         log.info("Showing quizzes : "+this.quizRepository.getQuizzByTitle(title));
         return  this.quizRepository.getQuizzByTitle(title);
+    }
+    public Quizz getQuizzById(Integer id){
+        log.info("Showing quizzes : "+this.quizRepository.getQuizzById(id));
+        return  this.quizRepository.getQuizzById(id);
+    }
+    public Integer computeScore(Quizz quizz, List<String> userAnswers) {
+        List<String> quizzAnswers = new ArrayList<>();
+        log.info("Calculating score for quizz : "+quizz.getTitle());
+        log.info("Collecting right ansewers for quizz : "+quizz.getTitle());
+        int score = 0;
+        for (int i = 0; i < quizz.getQuestion().size(); i++) {
+            quizzAnswers.add(quizz.getQuestion().get(i).getRightAnswer());
+        }
+        log.info("Right Answers for quizz : "+quizzAnswers);
+
+        for (int i = 0; i < quizzAnswers.size(); i++) {
+            if (quizzAnswers.contains(userAnswers.get(i))) {
+                score += 1;
+            }
+        }
+
+        return score;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/quiz")
 @Slf4j
@@ -29,4 +31,10 @@ public class QuizResource {
         return new ResponseEntity<Quizz>(this.quizService.getQuizz(title),HttpStatus.OK);
     }
 
+    @GetMapping("/score")
+    public  Integer scoreQuiz(@RequestParam("quizz") Integer quizzId, @RequestParam("answers") List<String> answers){
+        Quizz quizz = this.quizService.getQuizzById(quizzId);
+        return this.quizService.computeScore(quizz, answers);
+
+    }
 }
