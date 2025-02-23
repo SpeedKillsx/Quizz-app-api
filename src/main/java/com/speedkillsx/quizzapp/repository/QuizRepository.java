@@ -17,4 +17,5 @@ public interface QuizRepository extends JpaRepository<Quizz, Integer> {
     List<Question> getQuestionsForQuizz(String category, Integer numberofQuestions);
 
     Quizz getQuizzByTitle(String title);
+    Quizz getQuizzById(Integer id);
 }
