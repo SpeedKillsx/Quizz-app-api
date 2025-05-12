@@ -22,8 +22,8 @@ public class QuizResource {
     }
 
     @PostMapping("/create")
-    public void newQuiz(@RequestParam("title") String title, @RequestParam("category") String category, @RequestParam("numberOfQuestions") Integer numberOfQuestions ) {
-        this.quizService.createQuizz(title, category, numberOfQuestions);
+    public void newQuiz(@RequestBody Quizz quizz ) {
+        this.quizService.createQuizz(quizz.getTitle(), quizz.getCategory(), quizz.getNumberQuestions());
     }
 
     @GetMapping("/show/{title}")
@@ -35,6 +35,5 @@ public class QuizResource {
     public  Integer scoreQuiz(@RequestParam("quizz") Integer quizzId, @RequestParam("answers") List<String> answers){
         Quizz quizz = this.quizService.getQuizzById(quizzId);
         return this.quizService.computeScore(quizz, answers);
-
     }
 }
